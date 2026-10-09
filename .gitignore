@@ -1,0 +1,21 @@
+# Entorno de Python
+.venv/
+__pycache__/
+
+# Secretos: nunca se suben
+.env
+
+# Archivos de macOS
+.DS_Store
+
+# Resultados de pruebas y empaquetado
+salidas/
+vector_store/
+paquete/
+*.zip
+
+# Terraform (estado y proveedores)
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
