@@ -19,3 +19,6 @@ paquete/
 *.tfstate
 *.tfstate.*
 *.tfvars
+
+# PDFs de la bitácora (se guardan en Drive, no en GitHub)
+docs/bitacora/
