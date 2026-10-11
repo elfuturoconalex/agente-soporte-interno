@@ -17,6 +17,8 @@ CARPETA_VECTOR_STORE = Path("vector_store")
 MODELO = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 TOP = 5   # Cuántos pedazos traer
 
+_modelo = None
+
 
 def similitud(pregunta_vector, vectores):
     """Qué tan cerca está la pregunta de cada pedazo: 1 = idéntico, 0 = nada que ver."""
@@ -25,23 +27,27 @@ def similitud(pregunta_vector, vectores):
     return vectores @ pregunta_vector
 
 
-def main():
-    pregunta = " ".join(sys.argv[1:]) or "¿Cuánto me dan para comida en un viaje nacional?"
+def buscar(pregunta, top=TOP):
+    """Regresa una lista de (puntaje, pedazo) con los pedazos más parecidos."""
+    global _modelo
+    if _modelo is None:
+        _modelo = TextEmbedding(MODELO)
 
     vectores = np.load(CARPETA_VECTOR_STORE / "vectores.npy")
     pedazos = json.loads((CARPETA_VECTOR_STORE / "pedazos.json").read_text(encoding="utf-8"))
 
-    modelo = TextEmbedding(MODELO)
-    pregunta_vector = next(iter(modelo.embed([pregunta])))
-
+    pregunta_vector = next(iter(_modelo.embed([pregunta])))
     puntajes = similitud(pregunta_vector, vectores)
-    mejores = np.argsort(puntajes)[::-1][:TOP]
+    mejores = np.argsort(puntajes)[::-1][:top]
+    return [(float(puntajes[i]), pedazos[i]) for i in mejores]
 
+
+def main():
+    pregunta = " ".join(sys.argv[1:]) or "¿Cuánto me dan para comida en un viaje nacional?"
     print(f"\n❓ Pregunta: {pregunta}\n")
     print(f"🔍 Los {TOP} pedazos más parecidos:\n")
-    for lugar, i in enumerate(mejores, start=1):
-        p = pedazos[i]
-        print(f"{lugar}. [{puntajes[i]:.2f}] {p['id']}  ·  {p['titulo']} > {p['seccion']}")
+    for lugar, (puntaje, p) in enumerate(buscar(pregunta), start=1):
+        print(f"{lugar}. [{puntaje:.2f}] {p['id']}  ·  {p['titulo']} > {p['seccion']}")
 
 
 if __name__ == "__main__":

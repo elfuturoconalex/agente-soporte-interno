@@ -6,7 +6,7 @@ Agente de IA que responde preguntas de un equipo consultando su base de conocimi
 
 ## Fases del proyecto
 
-- [ ] **Fase 1:** Agente local: documentos en archivos, vector store local y respuestas con fuentes
+- [x] **Fase 1:** Agente local: documentos en archivos, vector store local y respuestas con fuentes
 - [ ] **Fase 2:** En AWS: S3 + Bedrock Knowledge Base + vector store + Lambda + API Gateway (con ADR de la decisión)
 - [ ] **Fase 3:** Confiabilidad: "no lo sé", citas obligatorias y examen de preguntas
 - [ ] **Opcional:** Infraestructura con Terraform
@@ -18,6 +18,23 @@ Agente de IA que responde preguntas de un equipo consultando su base de conocimi
 **Ingesta (A1–A4):** los documentos se suben a S3, se cortan en pedazos, se convierten en vectores y se guardan en el vector store.
 
 **Consulta (1–7):** el agente busca los pedazos más parecidos a la pregunta, Claude responde solo con ellos y cita sus fuentes.
+
+## Cómo usarlo (local)
+
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+echo "ANTHROPIC_API_KEY=<TU-LLAVE>" > .env
+
+python cortar.py          # A2: corta los documentos en pedazos
+python vectorizar.py      # A3-A4: convierte los pedazos en vectores (vector store local)
+python preguntar.py "¿Cuántos días de vacaciones tengo si llevo 2 años?"
+```
+
+Ejemplo de respuesta:
+
+> Si llevas 2 años de antigüedad, tienes derecho a 14 días de vacaciones al año. [Política de vacaciones > 1. Días de vacaciones por antigüedad]
 
 ## Qué demuestra este proyecto
 
