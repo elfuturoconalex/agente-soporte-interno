@@ -9,3 +9,7 @@ Se irá llenando durante el proyecto; en la Fase 3 llegará a 15–20 preguntas.
 | 2 | ¿Cuánto me dan para comida en un viaje nacional? | $900 MXN por día | viaticos-y-gastos-3 | ✅ Correcta |
 | 3 | ¿Cuál es la capital de Francia? | "No lo sé" (no está en los documentos) | ninguno | ✅ "No lo sé" |
 | 4 | ¿Puedo hacer home office? | Sí: 3 días en oficina y 2 en casa; martes y jueves en oficina | trabajo-remoto-2 | ⚠️ Incompleta: no dijo cuántos días |
+
+## Comparaciones planeadas
+- Con y sin **segunda búsqueda de Claude** (RAG agéntico).
+- **S3 Vectors vs. OpenSearch Serverless**: un día dedicado, creando y borrando OpenSearch el mismo día.
