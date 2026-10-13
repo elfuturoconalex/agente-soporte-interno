@@ -69,3 +69,38 @@ Costo por pregunta: **~$0.0013 USD**.
 
 ### Siguiente
 - Cerrar la Fase 1 y preparar el ADR de la Fase 2: ¿qué vector store usar en AWS?
+
+---
+
+## Sesión 3: Mi base de conocimiento en AWS (Fase 2)
+*12 de octubre de 2026*
+
+### Qué hice
+- Escribí el **ADR 001**: elegí **S3 Vectors** como vector store (barato, sin servidor). Pierdo la búsqueda híbrida; la compenso después con una segunda búsqueda de Claude.
+- Creé un bucket de S3 y subí los 7 documentos de Nimbo a la carpeta `documentos/`.
+- Creé una **Bedrock Knowledge Base** (tipo clásico con vector store) con **Titan Text Embeddings V2** y **S3 Vectors**.
+- Hice el **Sync**: AWS cortó, vectorizó y guardó los pedazos (lo mismo que mis pasos A2–A4, pero automático).
+- La probé en la pantalla **Test** de la consola, primero solo búsqueda y luego búsqueda + respuesta con **Claude Haiku 4.5**.
+
+### Resultados
+| Pregunta | Mac (Fase 1) | AWS (Fase 2) |
+|---|---|---|
+| ¿Cuánto me dan para comida en un viaje nacional? | ✅ $900 MXN | ✅ $900 MXN + fuente |
+| ¿Puedo hacer home office? | ⚠️ Incompleta | ✅ Completa (3 oficina / 2 casa, martes y jueves) |
+| Vacaciones en la oficina de Francia (no existe) | ✅ "No lo sé" a $0 | ✅ No inventó, pero sí llamó a Claude |
+
+### Qué aprendí
+- **Cómo se corta cambia el resultado:** mi Mac cortaba por secciones y perdió el "modelo híbrido"; AWS corta por tamaño y lo dejó junto con el resto. Ninguno es perfecto: hay que medir con el examen.
+- **Solo búsqueda vs. búsqueda + respuesta:** la búsqueda siempre trae varios pedazos, aunque algunos no sirvan; Claude filtra.
+- **La búsqueda agéntica** solo está en la Managed Knowledge Base. Con la clásica la haré yo con código.
+- **La consola usa sus propias instrucciones:** respuestas largas y sin umbral. Mis reglas irán en la Lambda.
+
+### Problemas y cómo los resolví
+- **Nombre del bucket con error** → un carácter invisible al pegar; lo escribí a mano.
+- **Entré al formulario de Managed KB** → no deja elegir S3 Vectors; usé el flujo clásico.
+- **La ruta de S3 apuntaba a todo el bucket** → la corregí a `documentos/`.
+
+### Siguiente
+- Crear la **Lambda** que consulta la Knowledge Base y a Claude con mis reglas (5 líneas, citas, umbral 0.30, trazas).
+- Ponerle la **API** (`POST /preguntar`) con límite de solicitudes.
+
