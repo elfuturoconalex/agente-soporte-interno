@@ -14,6 +14,15 @@ Se irá llenando durante el proyecto; en la Fase 3 llegará a 15–20 preguntas.
 - AWS corta por **tamaño** (~300 tokens), no por secciones. En documentos cortos, el "modelo híbrido" quedó en el mismo pedazo que los requisitos, por eso respondió completo.
 - En la pantalla de pruebas de AWS las respuestas salen **largas** y **siempre se llama a Claude** (no hay umbral). La Lambda usará mis reglas: máximo 5 líneas, citas y umbral 0.30.
 
+## Puntajes en AWS (Sesión 4)
+Umbral del "no lo sé" en la Lambda: **0.38** (entre 0.356 de la pregunta sin relación y 0.43 de las buenas). Recalibrar en la Fase 3 con más preguntas.
+
+| Pregunta | Mejor puntaje AWS |
+|---|---|
+| ¿Cuánto me dan para comida en un viaje nacional? | 0.436 |
+| ¿Puedo hacer home office? | 0.430 |
+| ¿Cuál es la capital de Francia? | 0.356 |
+
 ## Comparaciones planeadas
 - Con y sin **segunda búsqueda de Claude** (RAG agéntico).
 - **S3 Vectors vs. OpenSearch Serverless**: un día dedicado, creando y borrando OpenSearch el mismo día.

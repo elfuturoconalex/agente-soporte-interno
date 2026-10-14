@@ -104,3 +104,39 @@ Costo por pregunta: **~$0.0013 USD**.
 - Crear la **Lambda** que consulta la Knowledge Base y a Claude con mis reglas (5 líneas, citas, umbral 0.30, trazas).
 - Ponerle la **API** (`POST /preguntar`) con límite de solicitudes.
 
+---
+
+## Sesión 4: La Lambda del agente (Fase 2)
+*13 de octubre de 2026*
+
+### Qué hice
+- Escribí `aws/lambda_function.py`: el mismo agente de `preguntar.py`, pero busca en la **Knowledge Base** (`retrieve`) y habla con **Claude Haiku 4.5** por Bedrock (`converse`), sin llaves.
+- Creé la Lambda `agente-soporte` (Python 3.14, arm64, 128 MB, timeout de 30 s) con un rol nuevo y vacío.
+- Puse `KB_ID` y `UMBRAL` como **variables de entorno**, fuera del código.
+- Probé **sin permisos a propósito**: `AccessDeniedException` en `bedrock:Retrieve`. El rol nació sin acceso a nada.
+- Le di una política con solo 2 permisos (`aws/politica-iam.json`): buscar en **mi** KB y usar **solo** Claude Haiku 4.5.
+- Calibré el umbral del "no lo sé" con datos reales.
+
+### Resultados
+| Pregunta | Mejor puntaje | ¿Llamó a Claude? | Costo |
+|---|---|---|---|
+| ¿Puedo hacer home office? | 0.430 | Sí | $0.0030 |
+| ¿Cuánto me dan para comida en un viaje nacional? | 0.436 | Sí | $0.0018 |
+| ¿Cuál es la capital de Francia? (umbral 0.30) | 0.356 | Sí, contestó "no lo sé" | $0.0023 |
+| ¿Cuál es la capital de Francia? (umbral 0.38) | 0.356 | **No** | **$0** (0.6 s) |
+
+### Qué aprendí
+- **Un error a propósito es una prueba:** ver el `AccessDenied` antes de dar permisos confirma el mínimo privilegio. Como probar que el firewall bloquea antes de abrir el puerto.
+- **Los puntajes de AWS no se parecen a los de mi Mac:** todos salen pegados (0.35 a 0.44). El 0.30 dejaba pasar todo. Hay que **medir antes de decidir**.
+- **Umbral en 0.38, no 0.40:** prefiero que se cuele una pregunta mala ($0.002, y Claude igual dice "no lo sé") a bloquear una buena.
+- **Pedazos grandes cuestan más:** en AWS cada pregunta cuesta ~2 veces más que en mi Mac, porque Claude lee pedazos más largos.
+- **Variables de entorno:** cambié el umbral sin tocar el código.
+
+### Problemas y cómo los resolví
+- **La pantalla de crear Lambda cambió** → ya no dice "Create a new role…". Ahora es el interruptor *Custom execution role*: apagado = rol nuevo.
+- **Casi reutilizo el rol del Agente #1** → cada agente lleva su propio rol, con solo sus permisos.
+
+### Siguiente
+- Ponerle la **API** (`POST /preguntar`) con límite de solicitudes y probar con `curl`.
+- Fase 3: recalibrar el umbral con el examen de 15–20 preguntas. Quitar las negritas (markdown) si la respuesta va a WhatsApp.
+

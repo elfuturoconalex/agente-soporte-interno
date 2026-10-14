@@ -1,0 +1,20 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "BuscarSoloEnMiKnowledgeBase",
+      "Effect": "Allow",
+      "Action": "bedrock:Retrieve",
+      "Resource": "arn:aws:bedrock:us-east-1:<TU-CUENTA>:knowledge-base/<TU-KB-ID>"
+    },
+    {
+      "Sid": "UsarSoloClaudeHaiku",
+      "Effect": "Allow",
+      "Action": "bedrock:InvokeModel",
+      "Resource": [
+        "arn:aws:bedrock:*:<TU-CUENTA>:inference-profile/global.anthropic.claude-haiku-4-5*",
+        "arn:aws:bedrock:*::foundation-model/anthropic.claude-haiku-4-5*"
+      ]
+    }
+  ]
+}
