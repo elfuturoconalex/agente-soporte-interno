@@ -9,7 +9,8 @@ Es el mismo agente de preguntar.py, pero en la nube:
 
 Variables de entorno (se configuran en la consola de Lambda, no en el código):
   KB_ID   -> el ID de la Knowledge Base
-  UMBRAL  -> puntaje mínimo para llamar a Claude (ej. 0.30)
+  UMBRAL  -> puntaje mínimo para llamar a Claude (ej. 0.38)
+  MODELO  -> (opcional) el modelo de Claude; si no está, usa Haiku 4.5
 """
 import json
 import os
@@ -18,8 +19,8 @@ import time
 import boto3
 
 KB_ID = os.environ["KB_ID"]
-UMBRAL = float(os.environ.get("UMBRAL", "0.30"))
-MODELO = "global.anthropic.claude-haiku-4-5-20251001-v1:0"
+UMBRAL = float(os.environ.get("UMBRAL", "0.38"))
+MODELO = os.environ.get("MODELO", "global.anthropic.claude-haiku-4-5-20251001-v1:0")
 MAX_LARGO_PREGUNTA = 500
 
 kb = boto3.client("bedrock-agent-runtime")   # para buscar en la Knowledge Base
@@ -33,7 +34,8 @@ Reglas:
 2. Después de cada dato, cita su fuente entre corchetes con el nombre del documento, así: [viaticos-y-gastos].
 3. Si los fragmentos no contienen la respuesta, responde exactamente:
    "No lo sé: no encontré esa información en los documentos de Nimbo." y sugiere a qué área contactar si los fragmentos lo indican.
-4. Responde en español, de forma breve y clara (máximo 5 renglones)."""
+4. Responde en español, de forma breve y clara (máximo 5 renglones).
+5. Escribe en texto plano: sin negritas, sin asteriscos y sin títulos."""
 
 NO_LO_SE = "No lo sé: no encontré esa información en los documentos de Nimbo."
 
@@ -73,7 +75,7 @@ def lambda_handler(event, context):
     if len(pregunta) > MAX_LARGO_PREGUNTA:
         return responder(400, {"error": f"La pregunta es muy larga (máximo {MAX_LARGO_PREGUNTA} caracteres)."})
 
-    traza = {"pregunta": pregunta, "proveedor": "bedrock", "umbral": UMBRAL}
+    traza = {"pregunta": pregunta, "proveedor": "bedrock", "modelo": MODELO, "umbral": UMBRAL}
 
     # 1) Buscar los 5 pedazos más parecidos en la Knowledge Base
     t0 = time.time()
@@ -94,7 +96,7 @@ def lambda_handler(event, context):
     if mejor < UMBRAL:
         traza.update({"llamo_a_claude": False, "costo_usd": 0, "segundos_total": round(time.time() - inicio, 2)})
         print("TRAZA " + json.dumps(traza, ensure_ascii=False))
-        return responder(200, {"respuesta": NO_LO_SE, "fuentes": [], "costo_usd": 0})
+        return responder(200, {"respuesta": NO_LO_SE, "fuentes": [], "costo_usd": 0, "mejor_puntaje": traza["mejor_puntaje"]})
 
     # 3) Armar los fragmentos con su fuente y pedirle la respuesta a Claude
     fragmentos = "\n\n".join(
@@ -127,4 +129,4 @@ def lambda_handler(event, context):
     })
     print("TRAZA " + json.dumps(traza, ensure_ascii=False))
 
-    return responder(200, {"respuesta": texto, "fuentes": fuentes, "costo_usd": round(costo, 6)})
+    return responder(200, {"respuesta": texto, "fuentes": fuentes, "costo_usd": round(costo, 6), "mejor_puntaje": traza["mejor_puntaje"]})

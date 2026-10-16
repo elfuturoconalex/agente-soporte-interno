@@ -7,7 +7,7 @@ Agente de IA que responde preguntas de un equipo consultando su base de conocimi
 ## Fases del proyecto
 
 - [x] **Fase 1:** Agente local: documentos en archivos, vector store local y respuestas con fuentes
-- [ ] **Fase 2:** En AWS: S3 + Bedrock Knowledge Base + vector store + Lambda + API Gateway (con ADR de la decisión)
+- [x] **Fase 2:** En AWS: S3 + Bedrock Knowledge Base + S3 Vectors + Lambda + API Gateway ([ADR 001](docs/adr/001-vector-store.md))
 - [ ] **Fase 3:** Confiabilidad: "no lo sé", citas obligatorias y examen de preguntas
 - [ ] **Opcional:** Infraestructura con Terraform
 
@@ -35,6 +35,34 @@ python preguntar.py "¿Cuántos días de vacaciones tengo si llevo 2 años?"
 Ejemplo de respuesta:
 
 > Si llevas 2 años de antigüedad, tienes derecho a 14 días de vacaciones al año. [Política de vacaciones > 1. Días de vacaciones por antigüedad]
+
+## Cómo usarlo (AWS)
+
+El agente vive en AWS: **API Gateway → Lambda → Bedrock Knowledge Base (S3 Vectors) → Claude Haiku 4.5**.
+
+```bash
+curl -X POST https://<MI-API>.execute-api.us-east-1.amazonaws.com/preguntar \
+  -H "Content-Type: application/json" \
+  -d '{"pregunta": "¿Puedo hacer home office?"}'
+```
+
+Respuesta:
+
+```json
+{"respuesta": "Sí, puedes hacer home office bajo el modelo híbrido de Nimbo: 2 días en casa y 3 en oficina... [trabajo-remoto]", "fuentes": ["trabajo-remoto"], "costo_usd": 0.003}
+```
+
+| Pregunta | Resultado | Costo |
+|---|---|---|
+| ¿Cuánto me dan para comida en un viaje nacional? | $900 MXN por día + fuente | $0.0018 |
+| ¿Puedo hacer home office? | Respuesta completa + fuente | $0.0030 |
+| ¿Cuál es la capital de Francia? | "No lo sé", **sin llamar a Claude** | $0 |
+
+**Seguridad y costos**
+- Sin llaves: la Lambda usa un rol de IAM con solo 2 permisos ([`aws/politica-iam.json`](aws/politica-iam.json)): buscar en **su** Knowledge Base y usar **solo** Claude Haiku 4.5.
+- Umbral del "no lo sé" (0.38) calibrado con datos: si ningún pedazo se parece lo suficiente, no se llama a Claude.
+- API limitada a 2 solicitudes por segundo y Lambda limitada a 2 ejecuciones a la vez.
+- Cada pregunta deja una traza en CloudWatch: puntajes, tokens, costo, tiempo y fuentes.
 
 ## Qué demuestra este proyecto
 

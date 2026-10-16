@@ -140,3 +140,30 @@ Costo por pregunta: **~$0.0013 USD**.
 - Ponerle la **API** (`POST /preguntar`) con límite de solicitudes y probar con `curl`.
 - Fase 3: recalibrar el umbral con el examen de 15–20 preguntas. Quitar las negritas (markdown) si la respuesta va a WhatsApp.
 
+---
+
+## Sesión 5: La API, el agente responde desde internet (Fase 2 completa)
+*16 de octubre de 2026*
+
+### Qué hice
+- Creé un **HTTP API** en API Gateway (`agente-soporte-api`) con la ruta `POST /preguntar` conectada a la Lambda (payload 2.0) y el stage `$default` con auto-deploy.
+- No cambié el código: la Lambda ya sabía leer la pregunta dentro de `body`.
+- Le puse 2 candados: **2 solicitudes por segundo** (ráfagas de 5) en la API y **2 Lambdas a la vez** (reserved concurrency).
+- Probé con `curl` desde mi Mac.
+
+### Resultados
+| Prueba | Resultado | Costo |
+|---|---|---|
+| Comida en viaje nacional | ✅ $900 MXN + fuente | $0.0018 |
+| Home office | ✅ Completa + fuente | $0.0030 |
+| Capital de Francia | ✅ "No lo sé" sin llamar a Claude | $0 |
+| Pregunta vacía | ✅ Error amable con ejemplo | $0 |
+
+### Qué aprendí
+- **Respuesta directa vs. segundo plano:** el Agente #1 tarda minutos, por eso responde "ticket" y guarda en S3. Este responde en segundos, así que contesta directo.
+- **Una API pública necesita frenos:** cualquiera con el link puede gastar mi dinero. El límite de la API y el de la Lambda son el tope.
+- **Las pantallas de AWS cambian:** las rutas ya no vienen prellenadas; hay que darle "Add route".
+
+### Siguiente
+- Fase 3: examen de 15–20 preguntas, recalibrar el umbral, quitar el formato markdown y probar la segunda búsqueda de Claude.
+
