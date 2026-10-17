@@ -110,7 +110,7 @@ def lambda_handler(event, context):
         messages=[{"role": "user", "content": [{"text": f"Fragmentos:\n\n{fragmentos}\n\nPregunta: {pregunta}"}]}],
         inferenceConfig={"maxTokens": 500, "temperature": 0},
     )
-    texto = salida["output"]["message"]["content"][0]["text"]
+    texto = salida["output"]["message"]["content"][0]["text"].replace("**", "")   # sin negritas, aunque Claude las ponga
     tokens_in = salida["usage"]["inputTokens"]
     tokens_out = salida["usage"]["outputTokens"]
     costo = tokens_in * 1 / 1_000_000 + tokens_out * 5 / 1_000_000   # Haiku 4.5: $1 entrada / $5 salida por millón

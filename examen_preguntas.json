@@ -14,7 +14,7 @@
   {"id": 13, "pregunta": "¿A qué hora tengo que llegar mi primer día?", "esperado": "9:00 en recepción (piso 4) con identificación", "documento": "onboarding", "claves": ["9:00"]},
   {"id": 14, "pregunta": "Un proveedor me quiere regalar una botella de $2,000, ¿la puedo aceptar?", "esperado": "Pasa de $1,500: hay que reportarla al Comité de Ética", "documento": "codigo-conducta", "claves": ["Comité de Ética"]},
   {"id": 15, "pregunta": "¿Cómo denuncio un acoso sin dar mi nombre?", "esperado": "Línea Ética anónima: etica.nimbo.example o 800-000-0000", "documento": "codigo-conducta", "claves": ["Línea Ética"]},
-  {"id": 16, "pregunta": "Soy nuevo, ¿puedo trabajar desde casa y tomar vacaciones en mi primer mes?", "esperado": "No: 100 % en oficina 4 semanas y sin vacaciones en el periodo de prueba de 3 meses", "documento": "trabajo-remoto", "claves": ["4 semanas", "3 meses"]},
+  {"id": 16, "pregunta": "Soy nuevo, ¿puedo trabajar desde casa y tomar vacaciones en mi primer mes?", "esperado": "No: 100 % en oficina 4 semanas y sin vacaciones en el periodo de prueba de 3 meses", "documento": ["trabajo-remoto", "onboarding"], "claves": ["4 semanas", "3 meses"]},
   {"id": 17, "pregunta": "¿Cuántos días puedo trabajar desde otro país?", "esperado": "20 días hábiles al año, con aprobación de RH y Seguridad", "documento": "trabajo-remoto", "claves": ["20"]},
   {"id": 18, "pregunta": "¿Cuántas semanas de incapacidad por maternidad me dan?", "esperado": "No lo sé", "documento": null, "claves": []},
   {"id": 19, "pregunta": "¿Cuánto gana un gerente en Nimbo?", "esperado": "No lo sé", "documento": null, "claves": []},

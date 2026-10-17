@@ -8,7 +8,7 @@ Agente de IA que responde preguntas de un equipo consultando su base de conocimi
 
 - [x] **Fase 1:** Agente local: documentos en archivos, vector store local y respuestas con fuentes
 - [x] **Fase 2:** En AWS: S3 + Bedrock Knowledge Base + S3 Vectors + Lambda + API Gateway ([ADR 001](docs/adr/001-vector-store.md))
-- [ ] **Fase 3:** Confiabilidad: "no lo sé", citas obligatorias y examen de preguntas
+- [ ] **Fase 3:** Confiabilidad: "no lo sé", citas obligatorias y examen de preguntas (examen automático de 20 preguntas: **20/20**)
 - [ ] **Opcional:** Infraestructura con Terraform
 
 ## Arquitectura (preliminar)
@@ -60,7 +60,7 @@ Respuesta:
 
 **Seguridad y costos**
 - Sin llaves: la Lambda usa un rol de IAM con solo 2 permisos ([`aws/politica-iam.json`](aws/politica-iam.json)): buscar en **su** Knowledge Base y usar **solo** Claude Haiku 4.5.
-- Umbral del "no lo sé" (0.38) calibrado con datos: si ningún pedazo se parece lo suficiente, no se llama a Claude.
+- Umbral del "no lo sé" (0.37) calibrado con un examen de 20 preguntas: si ningún pedazo se parece lo suficiente, no se llama a Claude.
 - API limitada a 2 solicitudes por segundo y Lambda limitada a 2 ejecuciones a la vez.
 - Cada pregunta deja una traza en CloudWatch: puntajes, tokens, costo, tiempo y fuentes.
 

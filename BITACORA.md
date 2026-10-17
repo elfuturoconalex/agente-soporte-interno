@@ -167,3 +167,42 @@ Costo por pregunta: **~$0.0013 USD**.
 ### Siguiente
 - Fase 3: examen de 15–20 preguntas, recalibrar el umbral, quitar el formato markdown y probar la segunda búsqueda de Claude.
 
+---
+
+## Sesión 6: El examen de 20 preguntas (Fase 3)
+*16 de octubre de 2026*
+
+### Qué hice
+- Escribí `examen_preguntas.json`: **20 preguntas** sacadas de los documentos de Nimbo. 16 con respuesta (varias escritas como habla la gente y una que necesita 2 documentos) y 4 trampas que no están en los documentos.
+- Escribí `examen.py`: manda las 20 preguntas a la API y califica solo. Aprueba si cita el documento correcto y menciona el dato clave, o si dice "no lo sé" en las trampas. Guarda el detalle en `salidas/examen_resultados.csv`.
+- Mejoré la Lambda: responde también el `mejor_puntaje`, el modelo es variable de entorno (`MODELO`) y quita las negritas (`**`) con código.
+- Corrí el examen con el umbral en 0 para ver los 20 puntajes y recalibré el umbral.
+
+### Resultados
+| Corrida | Calificación | Costo |
+|---|---|---|
+| Primera (umbral 0) | 19/20 (el error era del examen, no del agente) | $0.0439 |
+| Después de un cambio | 0/20: error 500 por una `e` suelta al pegar el código | $0 |
+| Final (umbral 0.37) | **20/20** | **$0.0416** |
+
+| Grupo | Puntajes |
+|---|---|
+| Preguntas con respuesta (16) | 0.383 a 0.522 |
+| Preguntas trampa (4) | Francia 0.356, estacionamiento 0.378, maternidad 0.379, sueldo de gerente **0.459** |
+
+### Qué aprendí
+- **El examen también se equivoca:** la pregunta 16 estaba bien contestada (citó `onboarding`, que también lo dice). Hay que leer las respuestas, no solo la calificación.
+- **El umbral no separa todo:** "¿Cuánto gana un gerente?" sacó 0.459, más que muchas preguntas buenas. Ningún umbral la bloquea sin bloquear preguntas buenas.
+- **Dos candados:** el umbral (0.37) ahorra dinero con lo obvio; Claude, con sus reglas, cuida la verdad con lo difícil. Dijo "no lo sé" en las 4 trampas.
+- **El 0.38 era peligroso:** la pregunta de ChatGPT sacó 0.383. Con 3 datos no se ve; con 20 sí.
+- **Pedir no basta, hay que asegurar:** Claude a veces ignora "sin negritas", así que el código las quita siempre.
+- **Una letra tumba todo:** una `e` suelta dio 20 errores 500. El examen lo detectó en un minuto.
+
+### Problemas y cómo los resolví
+- **`examen.py` no se encontraba** → la terminal estaba en `~`; con `cd ~/proyectos/agente-soporte-interno` se arregló.
+- **Error 500 en las 20 preguntas** → `NameError: name 'e' is not defined`. Una `e` se coló al pegar el código en la consola (línea 42). La borré y redesplegué.
+- **El umbral no se había guardado** → Francia seguía costando dinero. Lo cambié a 0.37 y el costo bajó.
+
+### Siguiente
+- Agregar 4–5 preguntas más difíciles (varios documentos, preguntas vagas). Solo si fallan, construir la segunda búsqueda de Claude y medir si las arregla.
+

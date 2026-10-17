@@ -39,11 +39,12 @@ def calificar(p, r):
     respuesta = r.get("respuesta", "")
     dijo_no_se = normal(respuesta).startswith("no lo se")
     if p["documento"] is None:
-        return dijo_no_se, "debía decir 'no lo sé'"
+        return dijo_no_se, "" if dijo_no_se else "debía decir 'no lo sé'"
     if dijo_no_se:
         return False, "dijo 'no lo sé' y sí había respuesta"
-    if p["documento"] not in r.get("fuentes", []):
-        return False, f"no citó {p['documento']}"
+    validos = p["documento"] if isinstance(p["documento"], list) else [p["documento"]]
+    if not any(d in r.get("fuentes", []) for d in validos):
+        return False, f"no citó {' ni '.join(validos)}"
     faltan = [c for c in p["claves"] if normal(c) not in normal(respuesta)]
     if faltan:
         return False, f"faltan datos: {', '.join(faltan)}"

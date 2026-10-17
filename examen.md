@@ -14,6 +14,16 @@ Se irá llenando durante el proyecto; en la Fase 3 llegará a 15–20 preguntas.
 - AWS corta por **tamaño** (~300 tokens), no por secciones. En documentos cortos, el "modelo híbrido" quedó en el mismo pedazo que los requisitos, por eso respondió completo.
 - En la pantalla de pruebas de AWS las respuestas salen **largas** y **siempre se llama a Claude** (no hay umbral). La Lambda usará mis reglas: máximo 5 líneas, citas y umbral 0.30.
 
+## Examen automático (Fase 3)
+Las 20 preguntas viven en `examen_preguntas.json` y se califican con `python examen.py` (ver el script para usarlo).
+
+**Resultado actual: 20/20** con umbral 0.37 · costo de las 20 preguntas: $0.042 USD.
+
+| Grupo | Puntajes en AWS |
+|---|---|
+| 16 preguntas con respuesta | 0.383 a 0.522 |
+| 4 preguntas trampa | 0.356 a 0.459 (el sueldo de gerente saca 0.459: lo detiene Claude, no el umbral) |
+
 ## Puntajes en AWS (Sesión 4)
 Umbral del "no lo sé" en la Lambda: **0.38** (entre 0.356 de la pregunta sin relación y 0.43 de las buenas). Recalibrar en la Fase 3 con más preguntas.
 
