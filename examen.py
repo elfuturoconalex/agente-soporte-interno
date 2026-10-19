@@ -1,5 +1,5 @@
 """
-Examen del agente (Fase 3): manda las 20 preguntas a la API y califica cada respuesta.
+Examen del agente (Fase 3): manda todas las preguntas a la API y califica cada respuesta.
 
 Uso:
   export AGENTE_API_URL="https://<MI-API>.execute-api.us-east-1.amazonaws.com/preguntar"
@@ -63,7 +63,7 @@ for p in preguntas:
     aprobadas += ok
     costo_total += r.get("costo_usd", 0) or 0
     puntaje = r.get("mejor_puntaje", "")
-    tipo = "con respuesta" if p["documento"] else "sin respuesta"
+    tipo = ("difícil" if p.get("dificil") else "con respuesta") if p["documento"] else "sin respuesta"
     print(f"{'✅' if ok else '❌'} {p['id']:>2}. [{puntaje}] ({tipo}) {p['pregunta']}" + (f"  → {motivo}" if motivo else ""))
     filas.append({
         "id": p["id"], "pregunta": p["pregunta"], "tipo": tipo, "aprobada": ok, "motivo": motivo,
@@ -81,7 +81,7 @@ with open("salidas/examen_resultados.csv", "w", newline="", encoding="utf-8") as
 print(f"\n📊 Calificación: {aprobadas}/{len(preguntas)}  ·  Costo total: ${costo_total:.4f} USD")
 
 # Para calibrar el umbral: puntajes de cada grupo
-con = sorted(f["mejor_puntaje"] for f in filas if f["tipo"] == "con respuesta" and f["mejor_puntaje"] != "")
+con = sorted(f["mejor_puntaje"] for f in filas if f["tipo"] != "sin respuesta" and f["mejor_puntaje"] != "")
 sin = sorted(f["mejor_puntaje"] for f in filas if f["tipo"] == "sin respuesta" and f["mejor_puntaje"] != "")
 if con and sin:
     print(f"🎯 Puntajes con respuesta: del {con[0]} al {con[-1]}")

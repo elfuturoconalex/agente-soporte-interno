@@ -17,7 +17,7 @@ Se irá llenando durante el proyecto; en la Fase 3 llegará a 15–20 preguntas.
 ## Examen automático (Fase 3)
 Las 20 preguntas viven en `examen_preguntas.json` y se califican con `python examen.py` (ver el script para usarlo).
 
-**Resultado actual: 20/20** con umbral 0.37 · costo de las 20 preguntas: $0.042 USD.
+**Resultado actual: 25/25** (20 + 5 difíciles) con umbral 0.37 · costo de las 25 preguntas: $0.055 USD.
 
 | Grupo | Puntajes en AWS |
 |---|---|

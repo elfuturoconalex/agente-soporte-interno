@@ -206,3 +206,31 @@ Costo por pregunta: **~$0.0013 USD**.
 ### Siguiente
 - Agregar 4–5 preguntas más difíciles (varios documentos, preguntas vagas). Solo si fallan, construir la segunda búsqueda de Claude y medir si las arregla.
 
+---
+
+## Sesión 7: Preguntas difíciles y la segunda búsqueda (Fase 3 completa)
+*18 de octubre de 2026*
+
+### Qué hice
+- Agregué **5 preguntas difíciles** al examen (ahora son 25): viaje a Colombia (3 datos en dólares), 3 semanas desde España (razonar 15 de 20 días), 7 años + 8 días no usados (juntar 2 secciones), cursos de la primera semana (pregunta vaga) y un correo que pide la contraseña (detectar phishing).
+- Primera corrida: **24/25**. Leí la respuesta que falló antes de decidir qué arreglar.
+- Ajusté las instrucciones de Claude: si los fragmentos responden aunque sea en parte, contestar lo que sí dicen y razonar con los datos; "no lo sé" solo si no hay nada relacionado.
+- Segunda corrida: **25/25**, y las 4 trampas siguen diciendo "no lo sé".
+- Documenté la decisión en el ADR 001: **la segunda búsqueda no se implementa por ahora**.
+
+### Resultados
+| Corrida | Calificación | Costo |
+|---|---|---|
+| Con preguntas difíciles | 24/25 | $0.0526 |
+| Con instrucciones ajustadas | **25/25** | **$0.0546** |
+
+### Qué aprendí
+- **Medir antes de construir:** la pregunta que falló tenía el pedazo correcto. La segunda búsqueda no la habría arreglado; el problema era que Claude fue demasiado precavido.
+- **Diagnosticar la causa real:** como en redes, "está lento" no siempre se arregla con más ancho de banda.
+- **Precaución vs. utilidad:** soltar un poco las reglas hizo útil al agente sin que inventara. Por eso se vuelve a correr el examen completo, incluidas las trampas.
+- **Una decisión de "no construir" también es arquitectura**, si está respaldada con datos.
+
+### Siguiente
+- Opcional: Terraform, día de OpenSearch Serverless (crear y borrar el mismo día) y comparación con la Managed Knowledge Base.
+- Publicar el avance en LinkedIn.
+

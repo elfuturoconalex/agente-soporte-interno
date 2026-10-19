@@ -1,22 +1,236 @@
 [
-  {"id": 1,  "pregunta": "¿Cuántos días de vacaciones tengo si llevo 2 años?", "esperado": "14 días", "documento": "politica-vacaciones", "claves": ["14"]},
-  {"id": 2,  "pregunta": "¿Cuánto me dan para comida en un viaje nacional?", "esperado": "$900 MXN por día", "documento": "viaticos-y-gastos", "claves": ["900"]},
-  {"id": 3,  "pregunta": "¿Cuál es la capital de Francia?", "esperado": "No lo sé", "documento": null, "claves": []},
-  {"id": 4,  "pregunta": "¿Puedo hacer home office?", "esperado": "3 días en oficina y 2 en casa; martes y jueves en oficina", "documento": "trabajo-remoto", "claves": ["3", "2", "martes", "jueves"]},
-  {"id": 5,  "pregunta": "¿Con cuánta anticipación tengo que pedir mis vacaciones?", "esperado": "10 días hábiles", "documento": "politica-vacaciones", "claves": ["10"]},
-  {"id": 6,  "pregunta": "¿De cuánto es la prima vacacional?", "esperado": "30 % del salario de los días de vacaciones", "documento": "politica-vacaciones", "claves": ["30"]},
-  {"id": 7,  "pregunta": "¿Cuánto me pagan de taxi si viajo a otro país?", "esperado": "40 USD por día", "documento": "viaticos-y-gastos", "claves": ["40"]},
-  {"id": 8,  "pregunta": "Perdí la factura de una comida del viaje, ¿me la reembolsan?", "esperado": "Sin factura solo hasta $300 MXN por viaje", "documento": "viaticos-y-gastos", "claves": ["300"]},
-  {"id": 9,  "pregunta": "¿Cada cuánto tengo que cambiar mi contraseña?", "esperado": "Cada 180 días", "documento": "seguridad-informacion", "claves": ["180"]},
-  {"id": 10, "pregunta": "Me robaron la laptop, ¿qué hago?", "esperado": "Reportarlo en máximo 2 horas a la Mesa de Ayuda", "documento": "seguridad-informacion", "claves": ["2 horas"]},
-  {"id": 11, "pregunta": "¿Puedo usar ChatGPT para resumir la propuesta de un cliente?", "esperado": "No: es información confidencial y no se pega en IA pública", "documento": "seguridad-informacion", "claves": ["confidencial"]},
-  {"id": 12, "pregunta": "¿Cómo me conecto a la VPN?", "esperado": "App Nimbo VPN, correo de la empresa, aprobar MFA, ícono verde", "documento": "faq-ti", "claves": ["Nimbo VPN"]},
-  {"id": 13, "pregunta": "¿A qué hora tengo que llegar mi primer día?", "esperado": "9:00 en recepción (piso 4) con identificación", "documento": "onboarding", "claves": ["9:00"]},
-  {"id": 14, "pregunta": "Un proveedor me quiere regalar una botella de $2,000, ¿la puedo aceptar?", "esperado": "Pasa de $1,500: hay que reportarla al Comité de Ética", "documento": "codigo-conducta", "claves": ["Comité de Ética"]},
-  {"id": 15, "pregunta": "¿Cómo denuncio un acoso sin dar mi nombre?", "esperado": "Línea Ética anónima: etica.nimbo.example o 800-000-0000", "documento": "codigo-conducta", "claves": ["Línea Ética"]},
-  {"id": 16, "pregunta": "Soy nuevo, ¿puedo trabajar desde casa y tomar vacaciones en mi primer mes?", "esperado": "No: 100 % en oficina 4 semanas y sin vacaciones en el periodo de prueba de 3 meses", "documento": ["trabajo-remoto", "onboarding"], "claves": ["4 semanas", "3 meses"]},
-  {"id": 17, "pregunta": "¿Cuántos días puedo trabajar desde otro país?", "esperado": "20 días hábiles al año, con aprobación de RH y Seguridad", "documento": "trabajo-remoto", "claves": ["20"]},
-  {"id": 18, "pregunta": "¿Cuántas semanas de incapacidad por maternidad me dan?", "esperado": "No lo sé", "documento": null, "claves": []},
-  {"id": 19, "pregunta": "¿Cuánto gana un gerente en Nimbo?", "esperado": "No lo sé", "documento": null, "claves": []},
-  {"id": 20, "pregunta": "¿Hay estacionamiento para empleados?", "esperado": "No lo sé", "documento": null, "claves": []}
+  {
+    "id": 1,
+    "pregunta": "¿Cuántos días de vacaciones tengo si llevo 2 años?",
+    "esperado": "14 días",
+    "documento": "politica-vacaciones",
+    "claves": [
+      "14"
+    ]
+  },
+  {
+    "id": 2,
+    "pregunta": "¿Cuánto me dan para comida en un viaje nacional?",
+    "esperado": "$900 MXN por día",
+    "documento": "viaticos-y-gastos",
+    "claves": [
+      "900"
+    ]
+  },
+  {
+    "id": 3,
+    "pregunta": "¿Cuál es la capital de Francia?",
+    "esperado": "No lo sé",
+    "documento": null,
+    "claves": []
+  },
+  {
+    "id": 4,
+    "pregunta": "¿Puedo hacer home office?",
+    "esperado": "3 días en oficina y 2 en casa; martes y jueves en oficina",
+    "documento": "trabajo-remoto",
+    "claves": [
+      "3",
+      "2",
+      "martes",
+      "jueves"
+    ]
+  },
+  {
+    "id": 5,
+    "pregunta": "¿Con cuánta anticipación tengo que pedir mis vacaciones?",
+    "esperado": "10 días hábiles",
+    "documento": "politica-vacaciones",
+    "claves": [
+      "10"
+    ]
+  },
+  {
+    "id": 6,
+    "pregunta": "¿De cuánto es la prima vacacional?",
+    "esperado": "30 % del salario de los días de vacaciones",
+    "documento": "politica-vacaciones",
+    "claves": [
+      "30"
+    ]
+  },
+  {
+    "id": 7,
+    "pregunta": "¿Cuánto me pagan de taxi si viajo a otro país?",
+    "esperado": "40 USD por día",
+    "documento": "viaticos-y-gastos",
+    "claves": [
+      "40"
+    ]
+  },
+  {
+    "id": 8,
+    "pregunta": "Perdí la factura de una comida del viaje, ¿me la reembolsan?",
+    "esperado": "Sin factura solo hasta $300 MXN por viaje",
+    "documento": "viaticos-y-gastos",
+    "claves": [
+      "300"
+    ]
+  },
+  {
+    "id": 9,
+    "pregunta": "¿Cada cuánto tengo que cambiar mi contraseña?",
+    "esperado": "Cada 180 días",
+    "documento": "seguridad-informacion",
+    "claves": [
+      "180"
+    ]
+  },
+  {
+    "id": 10,
+    "pregunta": "Me robaron la laptop, ¿qué hago?",
+    "esperado": "Reportarlo en máximo 2 horas a la Mesa de Ayuda",
+    "documento": "seguridad-informacion",
+    "claves": [
+      "2 horas"
+    ]
+  },
+  {
+    "id": 11,
+    "pregunta": "¿Puedo usar ChatGPT para resumir la propuesta de un cliente?",
+    "esperado": "No: es información confidencial y no se pega en IA pública",
+    "documento": "seguridad-informacion",
+    "claves": [
+      "confidencial"
+    ]
+  },
+  {
+    "id": 12,
+    "pregunta": "¿Cómo me conecto a la VPN?",
+    "esperado": "App Nimbo VPN, correo de la empresa, aprobar MFA, ícono verde",
+    "documento": "faq-ti",
+    "claves": [
+      "Nimbo VPN"
+    ]
+  },
+  {
+    "id": 13,
+    "pregunta": "¿A qué hora tengo que llegar mi primer día?",
+    "esperado": "9:00 en recepción (piso 4) con identificación",
+    "documento": "onboarding",
+    "claves": [
+      "9:00"
+    ]
+  },
+  {
+    "id": 14,
+    "pregunta": "Un proveedor me quiere regalar una botella de $2,000, ¿la puedo aceptar?",
+    "esperado": "Pasa de $1,500: hay que reportarla al Comité de Ética",
+    "documento": "codigo-conducta",
+    "claves": [
+      "Comité de Ética"
+    ]
+  },
+  {
+    "id": 15,
+    "pregunta": "¿Cómo denuncio un acoso sin dar mi nombre?",
+    "esperado": "Línea Ética anónima: etica.nimbo.example o 800-000-0000",
+    "documento": "codigo-conducta",
+    "claves": [
+      "Línea Ética"
+    ]
+  },
+  {
+    "id": 16,
+    "pregunta": "Soy nuevo, ¿puedo trabajar desde casa y tomar vacaciones en mi primer mes?",
+    "esperado": "No: 100 % en oficina 4 semanas y sin vacaciones en el periodo de prueba de 3 meses",
+    "documento": [
+      "trabajo-remoto",
+      "onboarding"
+    ],
+    "claves": [
+      "4 semanas",
+      "3 meses"
+    ]
+  },
+  {
+    "id": 17,
+    "pregunta": "¿Cuántos días puedo trabajar desde otro país?",
+    "esperado": "20 días hábiles al año, con aprobación de RH y Seguridad",
+    "documento": "trabajo-remoto",
+    "claves": [
+      "20"
+    ]
+  },
+  {
+    "id": 18,
+    "pregunta": "¿Cuántas semanas de incapacidad por maternidad me dan?",
+    "esperado": "No lo sé",
+    "documento": null,
+    "claves": []
+  },
+  {
+    "id": 19,
+    "pregunta": "¿Cuánto gana un gerente en Nimbo?",
+    "esperado": "No lo sé",
+    "documento": null,
+    "claves": []
+  },
+  {
+    "id": 20,
+    "pregunta": "¿Hay estacionamiento para empleados?",
+    "esperado": "No lo sé",
+    "documento": null,
+    "claves": []
+  },
+  {
+    "id": 21,
+    "pregunta": "Me voy de viaje a Colombia 5 días, ¿cuánto me dan al día para comida, hotel y taxi?",
+    "esperado": "Internacional: 75 USD comida, 180 USD hotel, 40 USD transporte local por día",
+    "documento": "viaticos-y-gastos",
+    "claves": [
+      "75",
+      "180",
+      "40"
+    ],
+    "dificil": true
+  },
+  {
+    "id": 22,
+    "pregunta": "Quiero trabajar 3 semanas desde España, ¿se puede y qué necesito?",
+    "esperado": "Sí: aprobación de RH y de Seguridad de la Información; máximo 20 días hábiles al año (3 semanas = 15)",
+    "documento": "trabajo-remoto",
+    "claves": [
+      "20",
+      "Seguridad"
+    ],
+    "dificil": true
+  },
+  {
+    "id": 23,
+    "pregunta": "Llevo 7 años en la empresa y el año pasado no usé 8 días, ¿cuántos días de vacaciones tengo este año?",
+    "esperado": "22 días por antigüedad + hasta 5 días del año pasado (usarlos antes del 31 de marzo); los otros 3 se pierden",
+    "documento": "politica-vacaciones",
+    "claves": [
+      "22",
+      "5"
+    ],
+    "dificil": true
+  },
+  {
+    "id": 24,
+    "pregunta": "Es mi primera semana, ¿qué cursos tengo que tomar y para cuándo?",
+    "esperado": "Seguridad de la Información, Código de Conducta y Protección de Datos en Aprende Nimbo, en 5 días hábiles",
+    "documento": "onboarding",
+    "claves": [
+      "5",
+      "Código de Conducta"
+    ],
+    "dificil": true
+  },
+  {
+    "id": 25,
+    "pregunta": "Me llegó un correo de 'soporte' pidiéndome mi contraseña de la VPN, ¿se la doy?",
+    "esperado": "No: nunca compartas tu contraseña; es phishing: usa 'Reportar phishing' o avisa a seguridad@nimbo.example",
+    "documento": "seguridad-informacion",
+    "claves": [
+      "phishing"
+    ],
+    "dificil": true
+  }
 ]

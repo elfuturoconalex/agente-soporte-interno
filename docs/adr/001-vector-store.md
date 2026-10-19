@@ -85,7 +85,15 @@ Es la única opción que cumple el requisito más importante (R1: sin costo fijo
 - Si la búsqueda híbrida resultara indispensable y la segunda búsqueda no alcanzara en el examen → **OpenSearch Serverless**.
 - Si la empresa ya tuviera sus datos en PostgreSQL y quisiera todo en un solo lugar → **Aurora + pgvector**.
 
-## 7. Fuentes
+## 7. Seguimiento: resultado con datos (Fase 3, octubre 2026)
+
+- **Examen automático de 25 preguntas** (16 normales, 5 difíciles y 4 trampas) contra el agente en AWS: **25/25**.
+- **La búsqueda sin híbrida fue suficiente.** "¿Puedo hacer home office?" contesta completo en AWS: el corte por tamaño de la Knowledge Base dejó el modelo híbrido junto con los requisitos.
+- **La única falla del examen (24/25) no fue de búsqueda:** en "Quiero trabajar 3 semanas desde España" la búsqueda trajo el pedazo correcto, pero Claude fue demasiado precavido y empezó con "no lo sé". Se arregló **ajustando las instrucciones** (responder lo que sí dicen los fragmentos y razonar con los datos), no buscando más.
+- **Decisión: la segunda búsqueda de Claude NO se implementa por ahora.** Ninguna pregunta del examen la necesita. Se reconsidera si una pregunta futura falla porque la búsqueda no trae el pedazo correcto.
+- **S3 Vectors se mantiene.**
+
+## 8. Fuentes
 
 - AWS: Amazon Aurora Serverless v2 supports scaling to zero capacity (noviembre 2024).
 - FactualMinds: Amazon S3 Vectors native vector storage; Bedrock Knowledge Base cost optimization 2026.
