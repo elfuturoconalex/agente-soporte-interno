@@ -9,15 +9,15 @@ Agente de IA que responde preguntas de un equipo consultando su base de conocimi
 - [x] **Fase 1:** Agente local: documentos en archivos, vector store local y respuestas con fuentes
 - [x] **Fase 2:** En AWS: S3 + Bedrock Knowledge Base + S3 Vectors + Lambda + API Gateway ([ADR 001](docs/adr/001-vector-store.md))
 - [x] **Fase 3:** Confiabilidad: "no lo sé", citas obligatorias y examen automático de 25 preguntas: **25/25**
-- [ ] **Opcional:** Infraestructura con Terraform
+- [ ] **Opcional:** Infraestructura con Terraform (se hará en el [Agente #3](https://github.com/elfuturoconalex/agente-pedidos-telegram), construido como código desde el inicio)
 
-## Arquitectura (preliminar)
+## Arquitectura en AWS
 
-![Arquitectura preliminar del agente de soporte interno](docs/agente2-arquitectura-preliminar.png)
+![Arquitectura en AWS del agente de soporte interno](docs/arquitectura-aws.png)
 
-**Ingesta (A1–A4):** los documentos se suben a S3, se cortan en pedazos, se convierten en vectores y se guardan en el vector store.
+**Ingesta (A):** las políticas se suben a S3 y la Knowledge Base las corta en pedazos, las convierte en vectores con Titan y las guarda en S3 Vectors.
 
-**Consulta (1–7):** el agente busca los pedazos más parecidos a la pregunta, Claude responde solo con ellos y cita sus fuentes.
+**Consulta (1–6):** la pregunta entra por API Gateway a la Lambda, que trae los 5 pedazos más parecidos. Si ninguno pasa el umbral, responde "no lo sé" sin llamar a Claude; si sí, Claude responde solo con esos pedazos y cita la fuente. Cada pregunta deja su traza en CloudWatch.
 
 ## Cómo usarlo (local)
 
