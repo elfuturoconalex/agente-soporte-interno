@@ -4,6 +4,8 @@ Agente de IA que responde preguntas de un equipo consultando su base de conocimi
 
 > Los documentos son de una **empresa ficticia**, creados solo para este proyecto.
 
+> **English summary:** Internal support agent using RAG on AWS (S3, Bedrock Knowledge Base, S3 Vectors, Lambda, API Gateway, Claude Haiku 4.5). Always cites the source document and answers "I don't know" when the answer isn't there, without calling the model (cost $0). Automated eval of 25 questions, including trick questions: 25/25. Design decisions documented in ADRs.
+
 ## Fases del proyecto
 
 - [x] **Fase 1:** Agente local: documentos en archivos, vector store local y respuestas con fuentes
