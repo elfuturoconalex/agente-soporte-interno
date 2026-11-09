@@ -47,7 +47,7 @@
   <!-- S3 documentos -->
   <rect x="245" y="340" width="200" height="90" rx="10" class="box"/><rect x="245" y="340" width="6" height="90" rx="3" fill="#7AA116"/>
   <text x="263" y="368" class="t">S3 · documentos/</text>
-  <text x="263" y="388" class="s">7 políticas de Nimbo</text>
+  <text x="263" y="388" class="s">7 documentos de Nimbo</text>
   <text x="263" y="404" class="s">(empresa ficticia)</text>
 
   <!-- KB -->
@@ -93,6 +93,6 @@
     <circle cx="476" cy="385" r="11" fill="#2563EB"/><text x="476" y="389" class="n" text-anchor="middle">A</text>
   </g>
 
-  <text x="40" y="622" class="s">Rol de IAM con mínimo privilegio (sin llaves): buscar solo en esta Knowledge Base y usar solo Claude Haiku 4.5.  Variables: KB_ID, UMBRAL (0.37), MODELO.</text>
+  <text x="40" y="622" class="s">Rol de IAM con mínimo privilegio (sin llaves): buscar solo en esta Knowledge Base, usar solo Claude Haiku 4.5 y escribir sus logs.  Variables: KB_ID, UMBRAL (0.37), MODELO.</text>
   <text x="40" y="642" class="s">Examen automático de 25 preguntas: 25/25 · ~0.002 USD por pregunta · las preguntas sin relación (puntaje &lt; 0.37) no llegan a Claude.</text>
 </svg>

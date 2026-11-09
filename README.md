@@ -61,7 +61,7 @@ Respuesta:
 | ¿Cuál es la capital de Francia? | "No lo sé", **sin llamar a Claude** | $0 |
 
 **Seguridad y costos**
-- Sin llaves: la Lambda usa un rol de IAM con solo 2 permisos ([`aws/politica-iam.json`](aws/politica-iam.json)): buscar en **su** Knowledge Base y usar **solo** Claude Haiku 4.5.
+- Sin llaves: la Lambda usa un rol de IAM de mínimo privilegio: buscar en **su** Knowledge Base y usar **solo** Claude Haiku 4.5 ([`aws/politica-iam.json`](aws/politica-iam.json)), más el permiso básico de Lambda para escribir sus logs en CloudWatch.
 - Umbral del "no lo sé" (0.37) calibrado con el examen automático: si ningún pedazo se parece lo suficiente, no se llama a Claude.
 - API limitada a 2 solicitudes por segundo y Lambda limitada a 2 ejecuciones a la vez.
 - Cada pregunta deja una traza en CloudWatch: puntajes, tokens, costo, tiempo y fuentes.
